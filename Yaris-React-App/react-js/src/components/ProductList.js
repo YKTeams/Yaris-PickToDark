@@ -6,6 +6,7 @@ export default function ProductList() {
   useEffect(() => {
     let productService = new ProductService();
     productService.getToken()
+    productService.getData()
   });
 
   return (

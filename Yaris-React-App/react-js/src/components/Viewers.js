@@ -1,26 +1,42 @@
 import React from "react";
 import styled from "styled-components";
 import ProductList from "./ProductList";
+
+//import firebase from "firebase";
 //import ProductList from "./ProductList";
 export default function Viewers() {
+  
   return (
     <Container>
       <Wrap>
-        <input name="itemId" onblur="getVal()" placeholder="ITEM ID" type="text"/>
+        <input name="itemId" onblur="getVal()" placeholder="ITEM ID" type="text" id="item"/>
         {/* <Text id="itemId">5093850</Text> */}
       </Wrap>
       <Wrap>
-      <input placeholder="PRODUCT ID" type="text" />
+      <input name="ProdId" onblur="getProd()" placeholder="PRODUCT ID" type="text" id="prodId" />
       </Wrap>
+      <div>
+        <Button id="myBtn" onclick="myFunction()">GETİR</Button>
+      </div>
       <Wrapper>
         <Text id="durumId">DURUM</Text>
       </Wrapper>
-      <div>
-        <Button onclick="myFunction()">GETİR</Button>
-      </div>
+      
 
-      <ProductList></ProductList>
-      <table></table>
+      <ProductList>
+      </ProductList>
+      <table striped bordered hover variant="dark">
+        <thead>
+          <th>NO</th>
+          <th>ITEM ID</th>
+          <th>PRODUCT ID</th>
+          <th>DURUM NO</th>
+          <th>ZAMAN</th>
+        </thead>
+        <tbody id="tbody1">
+        </tbody>
+      </table>
+      
     </Container>
   );
 }
@@ -30,11 +46,12 @@ const Container = styled.div`
   display: grid;
   padding: 20px 0px 26px;
   grid-gap: 25px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(1, 1fr));
   text-align: center;
 `;
 
 const Wrap = styled.div`
+display: grid;
   img {
     width: 100%;
     //height: 100%;
@@ -74,20 +91,22 @@ const Wrapper = styled.div`
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   text-align: center;
-
   img {
     width: 100%;
     //height: 100%;
     object-fit: cover;
   }
 
-  &:hover {
-    box-shadow: rgba(1 210 60 / 100%) 0px 40px 58px -16px,
-      rgba(0 0 0 / 72%) 0px 30px 22px -10px;
-    transform: scale(1.02);
-    border-color: rgba(1,210, 60, 0.8);
-  }
-
+  // &:hover {
+  //   box-shadow: rgba(1 210 60 / 100%) 0px 40px 58px -16px,
+  //     rgba(0 0 0 / 72%) 0px 30px 22px -10px;
+  //   transform: scale(1.02);
+  //   border-color: rgba(1,210, 60, 0.8);
+  // }
+  // box-shadow: rgba(60 210 300 / 100%) 0px 40px 58px -16px,
+  //         rgba(0 0 0 / 72%) 0px 30px 22px -10px;
+  //       transform: scale(1.02);
+  //       border-color: rgba(0, 249, 249, 0.8);
 `;
 const Text = styled.div`
   font-size: 35px;
@@ -99,13 +118,13 @@ const Text = styled.div`
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: "gray" : "black"};
-  color: "black" : "turquoise"};
+  background: "gray" : "black";
+  color: "black" : "turquoise";
   border: 3px solid rgba(249,249,249,0.1);
   font-size: 2.5em;
-  margin-left: 3em;
-  margin-top: 0.65em;
-  padding: 0.250em 2em;
+  margin-left: 0px;
+  margin-top: 0.55em;
+  padding: 0.350em 2em;
   border-radius: 15px;
   text-align: center;
   &:hover {
