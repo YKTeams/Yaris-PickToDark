@@ -5,15 +5,16 @@ import ProductList from "./ProductList";
 //import firebase from "firebase";
 //import ProductList from "./ProductList";
 export default function Viewers() {
-  
   return (
     <Container>
       <Wrap>
-        <input name="itemId" onblur="getVal()" placeholder="ITEM ID" type="text" id="item"/>
-        {/* <Text id="itemId">5093850</Text> */}
+        <input name="itemId" onBlur="getVal()" placeholder="ITEM ID" type="text" id="item"/>
       </Wrap>
       <Wrap>
-      <input name="ProdId" onblur="getProd()" placeholder="PRODUCT ID" type="text" id="prodId" />
+      <input name="ProdId" onBlur="getProd()" placeholder="PRODUCT ID" type="text" id="prodId" />
+      </Wrap>
+      <Wrap>
+        <input name="oprId" placeholder="OPERATOR İSMİ" type="text" id="opr"/>
       </Wrap>
       <div>
         <Button id="myBtn" onclick="myFunction()">GETİR</Button>
@@ -27,11 +28,14 @@ export default function Viewers() {
       </ProductList>
       <table striped bordered hover variant="dark">
         <thead>
+          <tr>
           <th>NO</th>
+          <th>OPR ISMI</th>
           <th>ITEM ID</th>
           <th>PRODUCT ID</th>
           <th>DURUM NO</th>
           <th>ZAMAN</th>
+          </tr>
         </thead>
         <tbody id="tbody1">
         </tbody>
@@ -42,7 +46,7 @@ export default function Viewers() {
 }
 
 const Container = styled.div`
-  margin-top: 20px;
+  margin-top: 5px;
   display: grid;
   padding: 20px 0px 26px;
   grid-gap: 25px;
@@ -59,7 +63,7 @@ display: grid;
   }
 
   input {
-    font-size: 35px;
+    font-size: 25px;
     border-radius: 15px;
     cursor: pointer;
     border: 3px solid rgba(249, 249, 249, 0.1);
@@ -123,7 +127,7 @@ const Button = styled.button`
   border: 3px solid rgba(249,249,249,0.1);
   font-size: 2.5em;
   margin-left: 0px;
-  margin-top: 0.55em;
+  margin-top: 0.1em;
   padding: 0.350em 2em;
   border-radius: 15px;
   text-align: center;
