@@ -1,36 +1,41 @@
 import React from "react";
 import styled from "styled-components";
-import "./style.css"
+import "./style.css";
+import Home from "./Home";
+import { Link } from "react-router-dom";
 function Header() {
   return (
-    <Nav>
-      <Logo src="https://www.yariskabin.com.tr/assets/img/logo.png" />
-      <NavMenu>
-        <p>
-          <img src="/images/home-icon.svg" alt="" />
-          <span>ANA SAYFA</span>
-        </p>
+    <div>
+      <Nav>
+        <Logo src="https://www.yariskabin.com.tr/assets/img/logo.png" />
+        <NavMenu>
+          <p>
+            <img src="/images/home-icon.svg" alt="" />
+            <span>
+              <Link to="/">HAZIRLIK ISTASYONU</Link>
+            </span>
+          </p>
 
-        <p>
-          <img src="/images/search-icon.svg" alt="" />
-          <span>ARAMA</span>
-        </p>
-
-        <p>
-          <img src="/images/watchlist-icon.svg" alt="" />
-          {/* <a href="./Report">RAPORLAMA</a> */}
-          <span>RAPORLAMA</span>
-        </p>
-      </NavMenu>
-      <h3>BAKIM-ONARIM DEPARTMANI</h3>
-      <img
-        className="pm"
-        src="/images/PM.jpg"
-        alt=""
-        width="50"
-        height="50"
-      />
-    </Nav>
+          <p>
+            <img src="/images/watchlist-icon.svg" alt="" />
+            {/* <a href="./Report">RAPORLAMA</a> */}
+            <span>
+              {/* <Link to="/report">RAPORLAMA</Link> */}
+              <a href="/report">RAPORLAMA</a>
+            </span>
+          </p>
+        </NavMenu>
+        <h3>BAKIM-ONARIM DEPARTMANI</h3>
+        <img
+          className="pm"
+          src="/images/PM.jpg"
+          alt=""
+          width="50"
+          height="50"
+        />
+      </Nav>
+      <Home />
+    </div>
   );
 }
 

@@ -1,12 +1,9 @@
 import axios from "axios";
-import firebase from 'firebase/app';
-import 'firebase/database'; // If using Firebase database
-import 'firebase/storage';  // If using Firebase storage
-//import { StatisticValue } from "semantic-ui-react";
-//import React, { useState, useEffect } from 'react'
-//import { Table } from "semantic-ui-react";
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/storage";
+import JsBarcode from "../../node_modules/jsbarcode";
 let arrays = [];
-
 let details = {
   grant_type: "password",
   userName: "TermUser",
@@ -55,7 +52,7 @@ axios
       let indexOfFirst = val.indexOf(searchTerm);
       if (indexOfFirst > 0) {
         val = val.slice(0, indexOfFirst);
-      } 
+      }
 
       return val;
     }
@@ -90,6 +87,25 @@ axios
             "rgba(1 210 60 / 100%) 0px 40px 58px -16px";
           document.getElementById("durumId").style.borderColor =
             "rgba(0,128,0 , 0.8)";
+          var w = window.open();
+          //w.document.open("text/plain");
+          let a1 = document.getElementById("opr").value;
+          let a2 = document.getElementById("item").value;
+          let a3 = document.getElementById("prodId").value;
+          let dateString = new Date().toLocaleString("TR", {
+            timeZone: "Europe/Istanbul",
+          });
+          let a4 = a2 + " " + a3 + " " + a1;
+          let a5 = dateString;
+          JsBarcode("#code128", a4);
+          JsBarcode("#code129", a5);
+          let innerContents = document.getElementById("code128").outerHTML;
+          let innerContents1 = document.getElementById("code129").outerHTML;
+          w.document.write(innerContents, innerContents1);
+          w.document.close();
+          w.focus();
+          w.print();
+          w.close();
           break;
         } else {
           document.getElementById("durumId").innerHTML = "BAŞARISIZ";
@@ -98,6 +114,7 @@ axios
             "rgba(255 0 0 / 100%) 0px 40px 58px -16px";
           document.getElementById("durumId").style.borderColor =
             "rgba(255, 0, 0 , 0.8)";
+            
         }
       }
     }
@@ -116,6 +133,74 @@ export default class ProductService {
   }
   getData() {
     window.onload = function () {
+      
+      
+      // //INPUT ATLAMA
+      // document.getElementById("item").focus();
+      // var a = document.getElementById("item"),
+      //   b = document.getElementById("prodId"),
+      //   c = document.getElementById("opr");
+
+      // a.onkeyup = function () {
+      //   if (
+      //     a.value.length === 10 ||
+      //     a.value.length === 9 ||
+      //     a.value.length === 8 ||
+      //     a.value.length === 7 ||
+      //     a.value.length === 6
+      //   ) {
+      //     b.focus();
+      //   }
+      // };
+
+      // b.onkeyup = function () {
+      //   if (
+      //     b.value.length === 10 ||
+      //     b.value.length === 9 ||
+      //     b.value.length === 8 ||
+      //     b.value.length === 7 ||
+      //     b.value.length === 6
+      //   ) {
+      //     c.focus();
+      //   }
+      // };
+      //OTOMATİK GETIR VE YAZDIR YAPABILIRIZ
+      // c.onkeyup = function () {
+      //   if (
+      //     c.value.length === 10 ||
+      //     c.value.length === 9 ||
+      //     c.value.length === 8 ||
+      //     c.value.length === 7 ||
+      //     c.value.length === 6
+      //   ) {
+      //     document.getElementById("myBtn1").onclick();
+      //   }
+      // };
+      //INPUT ATLAMA
+
+      //BARKOD YAZDIR BAŞLANGIÇ
+      //const btn = document.getElementById("myBtn1");
+      //btn.onclick = function () {
+      // var w = window.open();
+      // w.document.open("text/plain");
+      // let a1 = document.getElementById("opr").value;
+      // let a2 = document.getElementById("item").value;
+      // let a3 = document.getElementById("prodId").value;
+      // let dateString = new Date().toLocaleString("TR", {
+      //   timeZone: "Europe/Istanbul",
+      // });
+      // let a4 = a2 + " " + a3 + " " + a1;
+      // let a5 = dateString;
+      // JsBarcode("#code128", a4);
+      // JsBarcode("#code129", a5);
+      // let innerContents = document.getElementById("code128").outerHTML;
+      // let innerContents1 = document.getElementById("code129").outerHTML;
+      // w.document.write(innerContents,innerContents1);
+      // w.document.close();
+      // w.focus();
+      // w.print();
+      //};
+      //BARKOD YAZDIR BİTİŞ
       const firebaseConfig = {
         apiKey: "AIzaSyD8x9jTou16nrIZgG1haY6izPxr4ijWPhM",
         authDomain: "web-picktodark.firebaseapp.com",
@@ -131,7 +216,7 @@ export default class ProductService {
       firebase.initializeApp(firebaseConfig);
       //let database = firebase.database();
 
-      let opr,item, durum, prod;
+      let opr, item, durum, prod;
       function Ready() {
         opr = document.getElementById("opr").value;
         item = document.getElementById("item").value;
@@ -152,12 +237,13 @@ export default class ProductService {
             .database()
             .ref("users/" + formattedString)
             .set({
-              OprId:opr,
+              OprId: opr,
               ItemNo: item,
               ProdNo: prod,
               DurumNo: durum,
               ZamanDurum: formattedString,
             });
+            
           document.getElementById("opr").value = "";
           document.getElementById("item").value = "";
           document.getElementById("prodId").value = "";
@@ -167,6 +253,7 @@ export default class ProductService {
             "rgba(60 210 300 / 100%) 0px 40px 58px -16px";
           //READ DATA
         }, 11000);
+
       };
       firebase
         .database()
@@ -176,7 +263,8 @@ export default class ProductService {
         });
       firebase
         .database()
-        .ref("users")
+        .ref("users/")
+        .limitToFirst(1500)
         .once("value", function (AllRecords) {
           AllRecords.forEach(function (CurrentRecord) {
             let durum = CurrentRecord.val().DurumNo;
@@ -184,11 +272,11 @@ export default class ProductService {
             let items1 = CurrentRecord.val().ItemNo;
             let prod1 = CurrentRecord.val().ProdNo;
             let zaman = CurrentRecord.val().ZamanDurum;
-            AddItemsToTable(durum, opr1,items1, prod1, zaman);
+            AddItemsToTable(durum, opr1, items1, prod1, zaman);
           });
         });
       let strNo = 0;
-      function AddItemsToTable(durum, opr1,items1, prod1, zaman) {
+      function AddItemsToTable(durum, opr1, items1, prod1, zaman) {
         let tbody = document.getElementById("tbody1");
         let trow = document.createElement("tr");
         let td1 = document.createElement("td");
@@ -215,3 +303,4 @@ export default class ProductService {
     };
   }
 }
+
